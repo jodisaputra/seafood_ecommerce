@@ -80,6 +80,7 @@
         </div>
       </div>
       <!-- HERO SECTION-->
+      @include('sweetalert::alert')
       <div class="container">
         @yield('content')
       </div>

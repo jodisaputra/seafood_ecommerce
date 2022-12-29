@@ -11,7 +11,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form action="{{ $action }}" method="post">
+                        <form action="{{ $action }}" method="post" enctype="multipart/form-data">
                             @csrf
 
                             @if ($type == 'edit')
@@ -20,8 +20,37 @@
 
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" id="name" class="form-control" name="name"
+                                <input type="text" id="name"
+                                    class="form-control @error('name') is-invalid @enderror" name="name"
                                     value="{{ $name }}">
+                                @error('name')
+                                    <small class="text-danger">
+                                        {{ $message }}
+                                    </small>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label for="slug">Slug</label>
+                                <input type="text" id="slug"
+                                    class="form-control @error('name') is-invalid @enderror" name="slug"
+                                    value="{{ $slug }}">
+                                @error('slug')
+                                    <small class="text-danger">
+                                        {{ $message }}
+                                    </small>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label for="image">Image</label>
+                                <input type="file" id="image"
+                                    class="form-control @error('image') is-invalid @enderror" name="image">
+                                @error('image')
+                                    <small class="text-danger">
+                                        {{ $message }}
+                                    </small>
+                                @enderror
                             </div>
 
                             <button type="submit"
@@ -33,3 +62,17 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $('#name').change(function() {
+            $.get('{{ url('check_slug') }}', {
+                    'name': $(this).val()
+                },
+                function(data) {
+                    $('#slug').val(data.slug);
+                }
+            );
+        });
+    </script>
+@endpush

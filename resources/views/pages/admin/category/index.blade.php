@@ -17,7 +17,8 @@
                                 Category Management
                             </div>
                             <div class="col-md-2 float-right">
-                                <a href="{{ $action }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add New</a>
+                                <a href="{{ $action }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add
+                                    New</a>
                             </div>
                         </div>
                     </div>
@@ -55,8 +56,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: '{{ route('category.index') }}',
-                columns: [
-                    {
+                columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
                     },

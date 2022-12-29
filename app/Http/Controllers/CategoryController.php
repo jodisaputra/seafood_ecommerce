@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Category;
 use DataTables;
+use App\Models\Category;
+use Illuminate\Http\Request;
+use Cviebrock\EloquentSluggable\Services\SlugService;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoryController extends Controller
 {
@@ -32,7 +34,8 @@ class CategoryController extends Controller
                         return $btn;
                     })
                     ->addColumn('image', function($row){
-                        return $row->image;
+                        $image = '<img src="' . $row->image. '" class="rounded" style="width: 50px">';
+                        return $image;
                     })
                     ->rawColumns(['image','action'])
                     ->make(true);
@@ -53,7 +56,8 @@ class CategoryController extends Controller
             'action' => route('category.store'),
             'back' => route('category.index'),
             'type' => 'add',
-            'name' => old('name')
+            'name' => old('name'),
+            'slug' => old('slug'),
         ]);
     }
 
@@ -67,8 +71,30 @@ class CategoryController extends Controller
     {
         $this->validate($request, [
             'image'     => 'required|image|mimes:jpeg,png,jpg',
-            'name'     => 'required'
+            'name'     => 'required',
+            'slug' => 'required'
         ]);
+
+        // upload image
+        $image = $request->file('image');
+        $image->storeAs('public/category', $image->hashName());
+
+        $category = Category::create([
+            'name'     => $request->name,
+            'slug'     => $request->slug,
+            'image'     => $image->hashName(),
+        ]);
+
+        if($category)
+        {
+            Alert::toast('Berhasil Disimpan', 'success');
+            return redirect()->route('category.index');
+        }
+        else
+        {
+            Alert::toast('Gagal Disimpan', 'error');
+            return redirect()->route('category.index');
+        }
     }
 
     /**
@@ -114,5 +140,11 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function check_slug()
+    {
+        $slug = SlugService::createSlug(Category::class, 'slug', request('name'));
+        return response()->json(['slug' => $slug]);
     }
 }

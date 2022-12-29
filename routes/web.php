@@ -11,4 +11,5 @@ Route::prefix('admin')->group(function () {
     Route::resource('category', App\Http\Controllers\CategoryController::class);
 });
 
+Route::get('/check_slug', [App\Http\Controllers\CategoryController::class, 'check_slug'])->name('check_slug');
 
