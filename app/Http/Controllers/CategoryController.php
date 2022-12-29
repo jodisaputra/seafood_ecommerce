@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -25,7 +26,7 @@ class CategoryController extends Controller
                         $btn = '';
                         $btn .= '<a href="'. route('category.edit', $row->id) .'" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>';
                         $btn .= "
-                            <form action='". route('category.destroy', $row->id) ."' class='d-inline'>
+                            <form action='". route('category.destroy', $row->id) ."' class='d-inline' method='POST'>
                                 ". csrf_field() ."
                                 ". \method_field('DELETE') ."
                                 <button type='submit' class='btn btn-danger btn-sm' onclick=\"return confirm('Are you sure?')\"><i class='fas fa-trash'></i> Delete</button>
@@ -116,7 +117,14 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::find($id);
+        return view('pages.admin.category.form', [
+            'action' => route('category.update', $id),
+            'back' => route('category.index'),
+            'type' => 'edit',
+            'name' => old('name', $category->name),
+            'slug' => old('slug', $category->slug),
+        ]);
     }
 
     /**
@@ -128,7 +136,38 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = Category::find($id);
+        $this->validate($request, [
+            'image'     => 'image|mimes:jpeg,png,jpg',
+            'name'     => 'required',
+            'slug' => 'required'
+        ]);
+
+        // upload image
+        if($request->hasFile('image'))
+        {
+            $image = $request->file('image');
+            $image->storeAs('public/category', $image->hashName());
+
+            //delete old image
+            Storage::delete('public/category/'.$category->image);
+
+            $category->update([
+                'name'     => $request->name,
+                'slug'     => $request->slug,
+                'image'     => $image->hashName(),
+            ]);
+        }
+        else
+        {
+            $category->update([
+                'name'     => $request->name,
+                'slug'     => $request->slug
+            ]);
+        }
+
+        Alert::toast('Berhasil Diubah', 'success');
+        return redirect()->route('category.index');
     }
 
     /**
@@ -139,7 +178,14 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::find($id);
+        Storage::delete('public/category/'. $category->image);
+
+        //delete post
+        $category->delete();
+
+        Alert::toast('Berhasil Dihapus', 'success');
+        return redirect()->route('category.index');
     }
 
     public function check_slug()

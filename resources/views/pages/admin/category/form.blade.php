@@ -71,6 +71,7 @@
                 },
                 function(data) {
                     $('#slug').val(data.slug);
+                    console.log(data)
                 }
             );
         });
