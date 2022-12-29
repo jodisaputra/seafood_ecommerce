@@ -33,7 +33,7 @@
                             <div class="form-group">
                                 <label for="slug">Slug</label>
                                 <input type="text" id="slug"
-                                    class="form-control @error('name') is-invalid @enderror" name="slug"
+                                    class="form-control @error('slug') is-invalid @enderror" name="slug"
                                     value="{{ $slug }}">
                                 @error('slug')
                                     <small class="text-danger">
@@ -66,12 +66,11 @@
 @push('scripts')
     <script>
         $('#name').change(function() {
-            $.get('{{ url('check_slug') }}', {
+            $.get('{{ url('check_slug_category') }}', {
                     'name': $(this).val()
                 },
                 function(data) {
                     $('#slug').val(data.slug);
-                    console.log(data)
                 }
             );
         });

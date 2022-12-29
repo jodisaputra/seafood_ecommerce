@@ -34,10 +34,10 @@
     </li>
 
     <!-- Nav Item - Tables -->
-    <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+    <li class="nav-item {{ request()->segment(2) == 'product' ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('product.index') }}">
             <i class="fas fa-fw fa-table"></i>
-            <span>Tables</span></a>
+            <span>Produk</span></a>
     </li>
 
     <!-- Divider -->

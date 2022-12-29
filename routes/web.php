@@ -9,7 +9,9 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('category', App\Http\Controllers\CategoryController::class);
+    Route::resource('product', App\Http\Controllers\ProductController::class);
 });
 
-Route::get('/check_slug', [App\Http\Controllers\CategoryController::class, 'check_slug'])->name('check_slug');
+Route::get('/check_slug_category', [App\Http\Controllers\CheckSlugController::class, 'check_slug_category'])->name('check_slug_category');
+Route::get('/check_slug_product', [App\Http\Controllers\CheckSlugController::class, 'check_slug_product'])->name('check_slug_product');
 

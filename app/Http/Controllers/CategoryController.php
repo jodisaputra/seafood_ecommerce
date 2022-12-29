@@ -180,17 +180,9 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         Storage::delete('public/category/'. $category->image);
-
-        //delete post
         $category->delete();
 
         Alert::toast('Berhasil Dihapus', 'success');
         return redirect()->route('category.index');
-    }
-
-    public function check_slug()
-    {
-        $slug = SlugService::createSlug(Category::class, 'slug', request('name'));
-        return response()->json(['slug' => $slug]);
     }
 }
