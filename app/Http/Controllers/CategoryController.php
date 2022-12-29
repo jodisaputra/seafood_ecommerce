@@ -80,22 +80,14 @@ class CategoryController extends Controller
         $image = $request->file('image');
         $image->storeAs('public/category', $image->hashName());
 
-        $category = Category::create([
+        Category::create([
             'name'     => $request->name,
             'slug'     => $request->slug,
             'image'     => $image->hashName(),
         ]);
 
-        if($category)
-        {
-            Alert::toast('Berhasil Disimpan', 'success');
-            return redirect()->route('category.index');
-        }
-        else
-        {
-            Alert::toast('Gagal Disimpan', 'error');
-            return redirect()->route('category.index');
-        }
+        Alert::toast('Berhasil Disimpan', 'success');
+        return redirect()->route('category.index');
     }
 
     /**

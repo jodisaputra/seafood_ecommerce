@@ -5,6 +5,8 @@ use DataTables;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\ProductGallery;
+use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
@@ -23,7 +25,7 @@ class ProductController extends Controller
             return Datatables::of($data)->addIndexColumn()
                     ->addColumn('action', function($row){
                         $btn = '';
-                        $btn .= '<a href="" class="btn btn-info btn-sm">Gallery</a>';
+                        $btn .= '<a href="'. route('product.gallery.index', $row->id) .'" class="btn btn-info btn-sm">Gallery</a>';
                         $btn .= '<a href="'. route('product.edit', $row->id) .'" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>';
                         $btn .= "
                             <form action='". route('product.destroy', $row->id) ."' class='d-inline' method='POST'>
@@ -177,8 +179,76 @@ class ProductController extends Controller
         return redirect()->route('product.index');
     }
 
-    public function gallery($id)
+    public function gallery(Request $request, $product_id)
     {
+        $product = Product::find($product_id);
+        if($request->ajax())
+        {
+            $data = ProductGallery::with('product')->where('product_id', $product_id)->get();
+            return Datatables::of($data)->addIndexColumn()
+                    ->addColumn('action', function($row){
+                        $btn = '';
+                        $btn .= "
+                            <form action='". route('product.gallery.destroy', [$row->product_id, $row->id]) ."' class='d-inline' method='POST'>
+                                ". csrf_field() ."
+                                ". \method_field('DELETE') ."
+                                <button type='submit' class='btn btn-danger btn-sm' onclick=\"return confirm('Are you sure?')\"><i class='fas fa-trash'></i> Delete</button>
+                            </form>
+                        ";
+                        return $btn;
+                    })
+                    ->addColumn('image', function($row){
+                        $image = '<img src="' . $row->image. '" class="rounded" style="width: 50px">';
+                        return $image;
+                    })
+                    ->rawColumns(['image','action'])
+                    ->make(true);
+        }
+        return view('pages.admin.product.gallery', [
+            'action' => route('product.gallery.create', $product_id),
+            'back' => route('product.index'),
+            'title' => $product->title,
+            'product' => $product
+        ]);
+    }
 
+    public function gallery_create(Request $request, $product_id)
+    {
+        $product = Product::find($product_id);
+        return view('pages.admin.product.form_gallery', [
+            'action' => route('product.gallery.store'),
+            'back' => route('product.gallery.index', $product_id),
+            'title' => $product->title,
+            'product_id' => $product_id,
+        ]);
+    }
+
+    public function gallery_store(Request $request)
+    {
+        $this->validate($request, [
+            'image'     => 'required|image|mimes:jpeg,png,jpg',
+        ]);
+
+        // upload image
+        $image = $request->file('image');
+        $image->storeAs('public/product', $image->hashName());
+
+        ProductGallery::create([
+            'product_id' => $request->product_id,
+            'image'     => $image->hashName(),
+        ]);
+
+        Alert::toast('Berhasil Disimpan', 'success');
+        return redirect()->route('product.gallery.index', $request->product_id);
+    }
+
+    public function gallery_destroy($product_id, $gallery_id)
+    {
+        $productGallery = ProductGallery::find($gallery_id);
+        Storage::delete('public/product/'. $productGallery->image);
+        $productGallery->delete();
+
+        Alert::toast('Berhasil Dihapus', 'success');
+        return redirect()->route('product.gallery.index', ['product_id' => $product_id]);
     }
 }

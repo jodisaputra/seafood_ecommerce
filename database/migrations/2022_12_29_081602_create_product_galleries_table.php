@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('product_galleries', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id')->unsigned();
-            $table->string('images');
+            $table->string('image');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
         });
