@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
-    @include('includes/style')
+    @include('includes/frontend/styles')
   </head>
   <body>
     <div class="page-holder">
@@ -127,7 +127,7 @@
           </div>
         </div>
       </footer>
-      @include('includes/scripts')
+      @include('includes/frontend/scripts')
     </div>
   </body>
 </html>

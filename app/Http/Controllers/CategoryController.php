@@ -51,6 +51,8 @@ class CategoryController extends Controller
     {
         return view('pages.admin.category.form', [
             'action' => route('category.store'),
+            'back' => route('category.index'),
+            'type' => 'add',
             'name' => old('name')
         ]);
     }
@@ -63,7 +65,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'image'     => 'required|image|mimes:jpeg,png,jpg',
+            'name'     => 'required'
+        ]);
     }
 
     /**
