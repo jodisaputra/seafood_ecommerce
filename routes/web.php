@@ -21,3 +21,5 @@ Route::prefix('admin')->group(function () {
 Route::get('/check_slug_category', [App\Http\Controllers\CheckSlugController::class, 'check_slug_category'])->name('check_slug_category');
 Route::get('/check_slug_product', [App\Http\Controllers\CheckSlugController::class, 'check_slug_product'])->name('check_slug_product');
 
+//find products by slug
+Route::get('/product/category/{slug?}', [App\Http\Controllers\DefaultController::class, 'find_product_by_category'])->name('find_product_by_category');
