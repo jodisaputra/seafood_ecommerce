@@ -32,14 +32,45 @@
                             </li>
                         </ul>
                         <ul class="navbar-nav ms-auto">
-                            <li class="nav-item"><a class="nav-link" href="cart.html"> <i
-                                        class="fas fa-dolly-flatbed me-1 text-gray"></i>Cart<small
-                                        class="text-gray fw-normal">(2)</small></a></li>
+                            @guest('customer')
+                                @php
+                                    $cart = 0;
+                                @endphp
+                            @endguest
+                            @auth('customer')
+                                @php
+                                    $cart = \App\Models\Cart::where('customer_id', Auth::guard('customer')->user()->id)
+                                        ->get()
+                                        ->count();
+                                @endphp
+                            @endauth
+                            <li class="nav-item"><a class="nav-link" href="{{ route('product.shop.cart') }}">
+                                    <i class="fas fa-dolly-flatbed me-1 text-gray"></i>Cart<small
+                                        class="text-gray fw-normal">({{ $cart }})</small></a>
+                            </li>
                             {{-- <li class="nav-item"><a class="nav-link" href="#!"> <i
                                         class="far fa-heart me-1"></i><small class="text-gray fw-normal">
                                         (0)</small></a></li> --}}
-                            <li class="nav-item"><a class="nav-link" href="#!"> <i
-                                        class="fas fa-user me-1 text-gray fw-normal"></i>Login</a></li>
+                            @guest('customer')
+                                <li class="nav-item"><a class="nav-link" href="{{ route('customer.loginview') }}"><i
+                                            class="fas fa-user me-1 text-gray fw-normal"></i>Login</a></li>
+                            @endguest
+                            @auth('customer')
+                                <li class="nav-item"><a class="nav-link" href="#!"><i
+                                            class="fas fa-user me-1 text-gray fw-normal"></i>{{ Auth::guard('customer')->user()->name }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                                 document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                        <input type="hidden" name="type" value="user">
+                                    </form>
+                                </li>
+                            @endauth
                         </ul>
                     </div>
                 </nav>
@@ -97,6 +128,7 @@
             </div>
         </footer>
         @include('includes/frontend/scripts')
+        @stack('scripts')
     </div>
 </body>
 

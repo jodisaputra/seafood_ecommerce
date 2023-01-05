@@ -23,3 +23,18 @@ Route::get('/check_slug_product', [App\Http\Controllers\CheckSlugController::cla
 
 //find products by slug
 Route::get('/product/category/{slug?}', [App\Http\Controllers\DefaultController::class, 'find_product_by_category'])->name('find_product_by_category');
+
+// register customer
+Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'customerLoginForm'])->name('customer.loginview');
+Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'customerRegisterForm'])->name('customer.registerview');
+Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'customerLogin'])->name('customer.login');
+Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'customerCreateRegister'])->name('customer.register');
+
+//seeing detail product
+Route::get('/product/cart', [App\Http\Controllers\DefaultController::class, 'cart'])->name('product.shop.cart');
+Route::get('/product/{slug}', [App\Http\Controllers\DefaultController::class, 'detail'])->name('product.shop.detail');
+
+//cart
+Route::post('/cart/{slug}', [App\Http\Controllers\DefaultController::class, 'add_to_cart'])->name('cart.add');
+Route::delete('/remove_cart/{id}', [App\Http\Controllers\DefaultController::class, 'remove_from_cart'])->name('cart.remove');
+Route::put('/update_cart/{id}', [App\Http\Controllers\DefaultController::class, 'update_cart'])->name('cart.update');

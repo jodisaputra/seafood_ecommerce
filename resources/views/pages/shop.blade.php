@@ -42,23 +42,31 @@
                                     <div class="mb-3 position-relative">
                                         <div class="badge text-white bg-">
                                         </div>
-                                        <a class="d-block" href="">
+                                        <a class="d-block" href="{{ route('product.shop.detail', $item->slug) }}">
                                             @if (count($item->gallery) > 0)
                                                 <img class="img-fluid w-100" src="{{ $item->gallery[0]->image }}"
                                                     alt="{{ $item->title }}">
                                             @else
-                                                <img class="img-fluid w-100" src="{{ asset('frontend') }}/img/default-image.png"
+                                                <img class="img-fluid w-100"
+                                                    src="{{ asset('frontend') }}/img/default-image.png"
                                                     alt="{{ $item->title }}">
                                             @endif
                                         </a>
                                         <div class="product-overlay">
                                             <ul class="mb-0 list-inline">
-                                                <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark"
-                                                        href="cart.html">Add to cart</a></li>
+                                                <li class="list-inline-item m-0 p-0">
+                                                    <form action="{{ route('cart.add', $item->slug) }}" method="post">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-sm btn-dark">Add to
+                                                            cart</button>
+                                                    </form>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
-                                    <h6> <a class="reset-anchor" href="detail.html">{{ ucfirst($item->title) }}</a></h6>
+                                    <h6> <a class="reset-anchor"
+                                            href="{{ route('product.shop.detail', $item->slug) }}">{{ ucfirst($item->title) }}</a>
+                                    </h6>
                                     <p class="small text-muted">@currency($item->price)</p>
                                 </div>
                             </div>
