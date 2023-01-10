@@ -77,10 +77,15 @@ class DefaultController extends Controller
                 'qty' => $qty
             ]);
         } else {
+            if($request->detail == 'detail') {
+                $qty = $request->quantity;
+            } else {
+                $qty = 1;
+            }
             Cart::create([
                 'customer_id' => Auth::guard('customer')->user()->id,
                 'product_id' => $product->id,
-                'qty' => 1,
+                'qty' => $qty,
                 'price' => $product->price
             ]);
         }
