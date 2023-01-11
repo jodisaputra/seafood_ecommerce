@@ -38,3 +38,6 @@ Route::get('/product/{slug}', [App\Http\Controllers\DefaultController::class, 'd
 Route::post('/cart/{slug}', [App\Http\Controllers\DefaultController::class, 'add_to_cart'])->name('cart.add');
 Route::delete('/remove_cart/{id}', [App\Http\Controllers\DefaultController::class, 'remove_from_cart'])->name('cart.remove');
 Route::put('/update_cart/{id}', [App\Http\Controllers\DefaultController::class, 'update_cart'])->name('cart.update');
+
+//checkout
+Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout.index');

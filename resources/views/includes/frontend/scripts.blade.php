@@ -1,4 +1,5 @@
 <!-- JavaScript files-->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="{{ asset('frontend') }}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="{{ asset('frontend') }}/vendor/glightbox/js/glightbox.min.js"></script>
 <script src="{{ asset('frontend') }}/vendor/nouislider/nouislider.min.js"></script>

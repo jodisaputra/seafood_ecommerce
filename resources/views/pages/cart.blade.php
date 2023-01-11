@@ -73,7 +73,8 @@
                                                         class="small text-uppercase text-gray headings-font-family">Quantity</span>
                                                     <div class="quantity">
                                                         <input class="form-control form-control-sm border-0 shadow-0 p-0"
-                                                            type="number" value="{{ $item->qty }}" min="1" name="qty" />
+                                                            type="number" value="{{ $item->qty }}" min="1"
+                                                            name="qty" />
                                                     </div>
                                                 </div>
                                             </td>
@@ -115,7 +116,7 @@
                                         class="fas fa-long-arrow-alt-left me-2"> </i>Continue shopping</a>
                             </div>
 
-                            <div class="col-md-6 text-md-end"><a class="btn btn-outline-dark btn-sm" href="">Pay<i
+                            <div class="col-md-6 text-md-end"><a class="btn btn-outline-dark btn-sm" href="{{ route('checkout.index') }}">Checkout<i
                                         class="fas fa-long-arrow-alt-right ms-2"></i></a></div>
                         </div>
                     </div>

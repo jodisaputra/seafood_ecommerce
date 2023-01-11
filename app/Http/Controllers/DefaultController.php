@@ -27,9 +27,9 @@ class DefaultController extends Controller
         if($slug == null) {
             $product = Product::with(['gallery', 'category'])->get();
         } else {
-            $product = Product::with(['gallery', 'category' => function($q) use($slug) {
+            $product = Product::with(['gallery', 'category'])->whereHas('category', function($q) use($slug) {
                 $q->where('slug', '=', $slug);
-            }])->get();
+            })->get();
         }
         $category = Category::orderBy('id', 'desc')->get();
         return view('pages.shop', compact('category', 'product'));

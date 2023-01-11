@@ -20,9 +20,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone');
             $table->longText('full_address');
-            $table->string('status');
+            $table->string('status')->default('pending');
             $table->integer('grand_total');
-            $table->string('snap_token');
+            $table->string('snap_token')->nullable();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->timestamps();
         });
