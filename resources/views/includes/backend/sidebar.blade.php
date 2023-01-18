@@ -40,6 +40,12 @@
             <span>Produk</span></a>
     </li>
 
+    <li class="nav-item {{ request()->segment(2) == 'transaction' ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('transaction.index') }}">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Transaction</span></a>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 

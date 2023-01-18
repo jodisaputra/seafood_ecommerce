@@ -45,8 +45,10 @@
                                     name="full_address" placeholder="Apartment, Suite, Unit, etc (optional)" required>
                             </div>
                             <input type="hidden" value="{{ $total }}" name="grand_total" id="grand_total">
-                            <input type="hidden" value="{{ Auth::guard('customer')->user()->id }}" name="customer_id" id="customer_id">
-                            <input type="hidden" value="{{ Auth::guard('customer')->user()->email }}" name="email" id="email">
+                            <input type="hidden" value="{{ Auth::guard('customer')->user()->id }}" name="customer_id"
+                                id="customer_id">
+                            <input type="hidden" value="{{ Auth::guard('customer')->user()->email }}" name="email"
+                                id="email">
                             <div class="col-lg-12 form-group">
                                 <button class="btn btn-dark" type="submit">Place order</button>
                             </div>
@@ -99,13 +101,16 @@
             }, function(data, status) {
                 snap.pay(data.snap_token, {
                     onSuccess: function(result) {
-                        location.reload();
+                        window.location = "/my-transaction"
+                        // location.reload();
                     },
                     onPending: function(result) {
-                        location.reload();
+                        // location.reload();
+                        window.location = "/my-transaction"
                     },
                     onError: function(result) {
-                        location.reload();
+                        // location.reload();
+                        window.location = "/my-transaction"
                     }
                 });
                 return false;

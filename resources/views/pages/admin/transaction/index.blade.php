@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Seafood | Produk')
+@section('title', 'Seafood | Transaction List')
 
 @push('styles')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
@@ -14,11 +14,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-10">
-                                Produk
-                            </div>
-                            <div class="col-md-2 float-right">
-                                <a href="{{ $action }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add
-                                    New</a>
+                                Transaction
                             </div>
                         </div>
                     </div>
@@ -29,12 +25,12 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Title</th>
-                                        <th>Slug</th>
-                                        <th>Category</th>
-                                        <th>Description</th>
-                                        <th>Price</th>
-                                        {{-- <th>Stock</th> --}}
+                                        <th>INV Code</th>
+                                        <th>Customer Name</th>
+                                        <th>Phone Number</th>
+                                        <th>Address</th>
+                                        <th>Payment Status</th>
+                                        <th>Delivery Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -58,35 +54,35 @@
             $('#example').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('product.index') }}',
+                ajax: '{{ route('transaction.index') }}',
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
                     },
                     {
-                        data: 'title',
-                        name: 'title'
+                        data: 'invoice_code',
+                        name: 'invoice_code'
                     },
                     {
-                        data: 'slug',
-                        name: 'slug'
+                        data: 'name',
+                        name: 'name'
                     },
                     {
-                        data: 'category',
-                        name: 'category'
+                        data: 'phone',
+                        name: 'phone'
                     },
                     {
-                        data: 'description',
-                        name: 'description'
+                        data: 'full_address',
+                        name: 'full_address'
                     },
                     {
-                        data: 'price',
-                        name: 'price'
+                        data: 'status',
+                        name: 'status'
                     },
-                    // {
-                    //     data: 'stock',
-                    //     name: 'stock'
-                    // },
+                    {
+                        data: 'delivery_status',
+                        name: 'delivery_status'
+                    },
                     {
                         data: 'action',
                         name: 'action',

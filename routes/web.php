@@ -11,6 +11,9 @@ Route::prefix('admin')->group(function () {
     Route::resource('category', App\Http\Controllers\CategoryController::class);
     Route::resource('product', App\Http\Controllers\ProductController::class);
 
+    // transaction
+    Route::resource('transaction', App\Http\Controllers\TransactionController::class);
+
     //product gallery routes
     Route::get('/product/gallery/{product_id}', [App\Http\Controllers\ProductController::class, 'gallery'])->name('product.gallery.index');
     Route::get('/product/gallery/create/{product_id}', [App\Http\Controllers\ProductController::class, 'gallery_create'])->name('product.gallery.create');
@@ -41,3 +44,6 @@ Route::put('/update_cart/{id}', [App\Http\Controllers\DefaultController::class, 
 
 //checkout
 Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout.index');
+
+//my transaction
+Route::get('/my-transaction', [App\Http\Controllers\MyTransactionController::class, 'index'])->name('my-transaction.index');

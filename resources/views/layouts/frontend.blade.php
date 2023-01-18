@@ -54,10 +54,15 @@
                             @guest('customer')
                                 <li class="nav-item"><a class="nav-link" href="{{ route('customer.loginview') }}"><i
                                             class="fas fa-user me-1 text-gray fw-normal"></i>Login</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('customer.registerview') }}"><i
+                                            class="fas fa-user me-1 text-gray fw-normal"></i>Register</a></li>
                             @endguest
                             @auth('customer')
-                                <li class="nav-item"><a class="nav-link" href="#!"><i
+                                <li class="nav-item"><a class="nav-link"><i
                                             class="fas fa-user me-1 text-gray fw-normal"></i>{{ Auth::guard('customer')->user()->name }}</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('my-transaction.index') }}"><i
+                                            class="fas fa-user me-1 text-gray fw-normal"></i>My Transaction</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('logout') }}"

@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->integer('category_id')->unsigned();
             $table->integer('price');
-            $table->integer('stock');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            // $table->integer('stock');
+            // $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }

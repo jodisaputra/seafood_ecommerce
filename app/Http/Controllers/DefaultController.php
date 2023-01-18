@@ -69,6 +69,11 @@ class DefaultController extends Controller
 
         $product = Product::with(['gallery', 'category'])->where('slug', $slug)->first();
 
+        // if($request->quantity > $product->stock) {
+        //     Alert::toast('Maaf, produk yang dipesan melebihi stock yang tersedia !', 'error');
+        //     return redirect()->back();
+        // }
+
         $cart = Cart::where('customer_id', Auth::guard('customer')->user()->id)->where('product_id', $product->id)->first();
 
         if($cart) {

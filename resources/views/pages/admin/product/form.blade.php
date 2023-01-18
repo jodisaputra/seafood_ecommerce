@@ -79,7 +79,7 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="stock">Stock</label>
                                 <input type="text" id="stock"
                                     class="form-control @error('stock') is-invalid @enderror" name="stock"
@@ -89,7 +89,7 @@
                                         {{ $message }}
                                     </small>
                                 @enderror
-                            </div>
+                            </div> --}}
 
                             <button type="submit"
                                 class="btn btn-primary">{{ $type == 'add' ? 'Submit' : 'Save Changes' }}</button>

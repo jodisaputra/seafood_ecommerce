@@ -16,6 +16,11 @@ class Invoice extends Model
         return $this->hasMany(Order::class);
     }
 
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
     public function setStatusPending()
     {
         $this->attributes['status'] = 'pending';

@@ -52,8 +52,12 @@
                             <div class="col-sm-3 pl-sm-0">
                                 @csrf
                                 <input type="hidden" name="detail" value="detail">
-                                <button type="submit" class="btn btn-sm btn-dark">Add to
-                                    cart</button>
+                                @if ($product->stock == 0)
+                                    <button disabled class="btn btn-sm btn-dark">Out of Stock</button>
+                                @else
+                                    <button type="submit" class="btn btn-sm btn-dark">Add to
+                                        cart</button>
+                                @endif
                     </form>
                 </div>
                 <ul class="list-unstyled small d-inline-block">

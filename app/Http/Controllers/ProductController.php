@@ -65,7 +65,7 @@ class ProductController extends Controller
             'category' => old('category'),
             'category_list' => $category,
             'price' => old('price'),
-            'stock' => old('stock')
+            // 'stock' => old('stock')
         ]);
     }
 
@@ -82,7 +82,7 @@ class ProductController extends Controller
             'slug' => 'required',
             'category' => 'required',
             'price' =>'required|numeric',
-            'stock' => 'required|numeric'
+            // 'stock' => 'required|numeric'
         ]);
 
        Product::create([
@@ -91,7 +91,7 @@ class ProductController extends Controller
             'description' => $request->description,
             'category_id' => $request->category,
             'price'     => $request->price,
-            'stock' => $request->stock
+            // 'stock' => $request->stock
         ]);
 
         Alert::toast('Berhasil Disimpan', 'success');
@@ -129,7 +129,7 @@ class ProductController extends Controller
             'category' => old('category', $product->category_id),
             'category_list' => $category,
             'price' => old('price', $product->price),
-            'stock' => old('stock', $product->stock)
+            // 'stock' => old('stock', $product->stock)
         ]);
     }
 
@@ -148,7 +148,7 @@ class ProductController extends Controller
             'slug' => 'required',
             'category' => 'required',
             'price' =>'required|numeric',
-            'stock' => 'required|numeric'
+            // 'stock' => 'required|numeric'
         ]);
 
        $product->update([
@@ -157,7 +157,7 @@ class ProductController extends Controller
             'description' => $request->description,
             'category_id' => $request->category,
             'price'     => $request->price,
-            'stock' => $request->stock
+            // 'stock' => $request->stock
         ]);
 
         Alert::toast('Berhasil Diubah', 'success');

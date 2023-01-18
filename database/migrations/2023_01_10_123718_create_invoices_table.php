@@ -21,9 +21,10 @@ return new class extends Migration
             $table->string('phone');
             $table->longText('full_address');
             $table->string('status')->default('pending');
+            $table->enum('delivery_status', ['ongoing', 'on_delivery', 'complete'])->default('ongoing');
             $table->integer('grand_total');
             $table->string('snap_token')->nullable();
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            // $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->timestamps();
         });
     }

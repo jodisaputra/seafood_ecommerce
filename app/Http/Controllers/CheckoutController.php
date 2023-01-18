@@ -128,10 +128,15 @@ class CheckoutController extends Controller
                         $invoice->setStatusPending();
                     } else {
                         $invoice->setStatusSuccess();
+                        //remove cart
+                        $cart = Cart::where('customer_id', $invoice->customer_id)->first();
+                        $cart->delete();
                     }
                 }
             } else if($transactionStatus == 'settlement') {
                 $invoice->setStatusSuccess();
+                //remove cart
+                Cart::where('customer_id', $invoice->customer_id)->delete();
             } else if($transactionStatus == 'pending') {
                 $invoice->setStatusPending();
             } else if($transactionStatus == 'deny') {
